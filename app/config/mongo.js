@@ -1,5 +1,6 @@
 'use strict'
 import mongoose from 'mongoose'
+import mongooseRedisCache from 'mongoose-redis-cache'
 module.exports = (app)=>{
 
 
@@ -31,5 +32,8 @@ module.exports = (app)=>{
     });
   });
 
+  mongooseRedisCache(mongoose, {
+    cache: true
+  })
   
 }

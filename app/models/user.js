@@ -30,6 +30,10 @@ module.exports = (app)=>{
 			
 		}
 	);
+	
+	usuario.set('redisCache', true);
+	usuario.set('expires', 30);
+
 	return mongoose.model('Usuario', usuario);
 	
 }

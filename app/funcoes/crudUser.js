@@ -16,7 +16,6 @@ module.exports = (app)=>{
 
 		},
 		default: (req,res)=>{
-			
 			let user = new User();
 			user.nome = 'Higor Diego'
 			user.login = 'higor'
@@ -26,8 +25,6 @@ module.exports = (app)=>{
 			user.save()
 			.then(user => res.json(user))
 			.catch(err => res.json(err));
-
-		
 		}
 	}
 	return CrudCtrl;
