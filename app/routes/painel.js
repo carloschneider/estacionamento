@@ -1,5 +1,7 @@
+'use strict'
 module.exports = (app)=>{
-	const painel = app.controllers.painel;
+	const painel = app.controllers.painel
+	,     autenticar 	= require('../middleware/autenticador');
 	app.route('/painel')
-		.get(painel.index)
+		.get(autenticar.loginSistema, painel.index)
 }

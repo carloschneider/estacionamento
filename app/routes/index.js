@@ -1,3 +1,4 @@
+'use strict'
 module.exports = (app)=>{
 	const index 	= app.controllers.index
 	,   autenticar 	= require('../middleware/autenticador')
@@ -8,5 +9,8 @@ module.exports = (app)=>{
 		
 	app.route('/')
 		.get(index.index)
-		.post(passport.authenticate('local', { failureRedirect: 'loginfail'}), index.logar)
+		.post(passport.authenticate('local', { failureRedirect: 'loginfail'}), index.logar);
+		
+	app.route('/logout')
+		.get(index.logout);
 }

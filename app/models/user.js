@@ -1,3 +1,4 @@
+'use strict'
 module.exports = (app)=>{
 
 	const mongoose = require('mongoose')
@@ -10,7 +11,6 @@ module.exports = (app)=>{
 
 	const usuario = new Schema(
 		{
-			
 			nome: 		{ type: String, required: true},
 			
 			login: 		{ type: String, required: true,unique: true},
@@ -26,7 +26,7 @@ module.exports = (app)=>{
 			
 			updated_at: { type: Date, default: Date.now },
 			
-			status: 		{ type: Boolean, default: false}
+			status: 	{ type: Boolean, default: false}
 			
 		}
 	);

@@ -1,3 +1,4 @@
+'use strict'
 module.exports = (app)=>{
 	const indexCtrl = {
 		index: (req,res)=>{
@@ -9,6 +10,10 @@ module.exports = (app)=>{
 		error: (req,res)=>{
 			req.flash('info', 1);
 			res.redirect('/')			
+		},
+		logout: (req,res)=> {
+			req.logout()
+			res.redirect('/')
 		}
 
 	};

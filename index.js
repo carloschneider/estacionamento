@@ -16,7 +16,7 @@ import flash     		 from 'express-flash'
 import http 		 	 from 'http'
 
 
-const app              = express()
+const app = express()
 
 
 
@@ -80,7 +80,7 @@ passport.serializeUser((user, done)=> done(null, user));
 
 passport.deserializeUser((user, done)=> done(null, user));
 
-/*
+	/*
 	Importando os modulos..
 	*/
 	consign({cwd:'app', verbose:false})
