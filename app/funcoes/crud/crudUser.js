@@ -2,7 +2,6 @@
 module.exports = (app)=>{
 	const User = app.models.user
 	,	  CrudCtrl = {
-		
 		cadastrar: (req,res)=>{
 			let user = new User();
 			user.nome = req.body.nome
@@ -25,6 +24,9 @@ module.exports = (app)=>{
 			user.save()
 			.then(user => res.json(user))
 			.catch(err => res.json(err));
+		},
+		autenticar: (req,res)=>{
+			res.json({msg: true});
 		}
 	}
 	return CrudCtrl;

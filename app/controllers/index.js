@@ -1,14 +1,20 @@
 'use strict'
+
 module.exports = (app)=>{
-	const indexCtrl = {
+	const 	regrasUser = app.funcoes.regras.user
+	,	 indexCtrl = {
 		index: (req,res)=>{
-			res.render('index')
+			app.get('/', function (req, res) {
+				res.sendfile('./public/paginas/index.html');
+			});
 		},
 
-		logar: (req,res)=> res.redirect('/painel'),
+		autenticao: (req,res)=>{
+			regrasUser.autenticar(req,res);
+		},
 
 		error: (req,res)=>{
-			req.flash('info', 1);
+			
 			res.redirect('/')			
 		},
 		logout: (req,res)=> {

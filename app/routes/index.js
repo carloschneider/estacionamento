@@ -1,16 +1,17 @@
 'use strict'
 module.exports = (app)=>{
-	const index 	= app.controllers.index
-	,   autenticar 	= require('../middleware/autenticador')
-	,   passport 	= require('passport');
+	const index 	= app.controllers.index;
 
 	app.route('/loginfail')
 		.get(index.error)
 		
 	app.route('/')
+		.post(index.autenticao)
 		.get(index.index)
-		.post(passport.authenticate('local', { failureRedirect: 'loginfail'}), index.logar);
+
+	app.route('/api/user')
+		.get(index.autenticao)
 		
-	app.route('/logout')
+	app.route('/logout',)
 		.get(index.logout);
 }
