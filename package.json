@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Software para gerencial estacionamento",
   "scripts": {
-    "start": "nodemon index.js --exec babel-node --presets es2015,stage-2"
+    "start": "nodemon --ignore public index.js --exec babel-node --presets es2015,stage-2"
   },
   "keywords": [
     "estacionamento",

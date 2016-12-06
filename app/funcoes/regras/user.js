@@ -9,15 +9,15 @@ module.exports = (app)=>{
 			User.findOne({
 				login: req.body.nome
 			}, function(err, user) {
-
+				
 				if (err) throw err;
 
 				if (!user) {
-					res.json({ success: false, message: 'Error na atutenticação. Usuário não encontrado.' });
+					res.json({ success: false, message: '<strong> Ops! </strong> Usuário não encontrado.' });
 				} else if (user) {
 
 					if(pass.validate(user.password, req.body.senha)) {
-						res.json({ success: false, message: 'Error na atutenticação. Senha incorreta.' });
+						res.json({ success: false, message: ' <strong> Ops! </strong> Senha incorreta.' });
 					} else {
 
 						var token = jwt.sign(user, app.get('superSecret'), {

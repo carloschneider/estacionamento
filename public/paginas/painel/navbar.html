@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse" >
+<nav class="navbar navbar-inverse" ng-controller="PainelCtrl" >
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -10,6 +10,13 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
+        <li ui-route="{{menuItems.url}}" ng-class="{active: $uiRoute}"
+        ng-repeat="(key, menuItem) in menuItems">
+        <a ng-href="{{menuItem.url}}" title="{{menuItem.title}}">
+         {{menuItem.name}}
+       </a>
+     </li>
+      <!-- 
        <li><a href="/painel/atendimento">Usuários</a></li>
        <li><a href="/painel/chamada">Estabelecimentos</a></li>
        <li><a href="/painel/clientes">Clientes</a></li>
@@ -17,10 +24,10 @@
        <li><a href="/painel/clientes">Lava Jato</a></li>
        <li><a href="/painel/clientes">Clientes</a></li>
        <li><a href="/painel/clientes">Convênios</a></li>
-       <li><a href="/painel/clientes">Mensalidades</a></li>
+       <li><a href="/painel/clientes">Mensalidades</a></li> -->
      </ul>
      <ul class="nav navbar-nav navbar-right">
-      <li><a href="/logout"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+      <li><a ng-click="sair()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
     </ul>
   </div>
 </div>
