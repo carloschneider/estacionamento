@@ -22,7 +22,8 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // Todas as urls vai para o controle do angular
 app.get('/*', function(req, res){
-    res.sendfile('./public/paginas/index.html');
+     res.sendfile('./public/paginas/index.html');
+     
 });
 
 

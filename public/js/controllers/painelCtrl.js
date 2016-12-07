@@ -1,6 +1,7 @@
 'use strict'
 app.controller('PainelCtrl', ['$scope','AuthService','$location', function($scope,AuthService,$location){
 
+
 	$scope.menuItems = [
 	{
 		name: 'Usuários',
@@ -32,9 +33,9 @@ app.controller('PainelCtrl', ['$scope','AuthService','$location', function($scop
 	},
 	];
 
-
 	$scope.sair = function(){
 		AuthService.logout();
 		$location.path('/');
 	}
 }]);
+

@@ -1,5 +1,5 @@
 'use strict'
-var app = angular.module('app',['btford.socket-io','ngRoute','ngStorage','ngFlash'])
+var app = angular.module('app',['btford.socket-io','ui.router','ngRoute','ngStorage','ngFlash'])
 .factory('mySocket', function (socketFactory) {
 	return socketFactory();
 })
@@ -8,8 +8,8 @@ var app = angular.module('app',['btford.socket-io','ngRoute','ngStorage','ngFlas
     $rootScope.$on('$routeChangeStart', function (event, next, current) {
         if (next.authorize) {
             if (!AuthService.getToken()) {
-                event.preventDefault();
-                $location.path('/');
+                // event.preventDefault();
+                // $location.path('/');
                 $rootScope.$evalAsync(function () {
                     $location.path('/');
                 })

@@ -1,21 +1,23 @@
 'use strict'
-app.config(function($routeProvider,$locationProvider) {
-    $routeProvider
+app.config(function($stateProvider,$locationProvider,$urlRouterProvider) {
+    
+    $stateProvider    
 
-    .when("/", {
+    .state("login", {
+        url: '/',
         templateUrl : "paginas/login/index.html",
         authorize: false,
         controller: 'UserCtrl'
     })
-
-    .when("/painel", {
+    .state('painel', {
+        url:'/painel',
         templateUrl: "paginas/painel/index.html",
         authorize: true
     })
-    .otherwise({
-        redirectTo: '/'
-    });
+    
+     $urlRouterProvider
+        .otherwise('/');
 
     $locationProvider.html5Mode(true);
 
-})
+});
