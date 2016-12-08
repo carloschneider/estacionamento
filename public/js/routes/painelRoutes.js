@@ -4,17 +4,13 @@ app.config(['$stateProvider','$locationProvider', '$urlRouterProvider' , functio
 
     $stateProvider    
 
-    .state("login", {
-        url: '/',
+    .state("painel.usuario", {
+        url: '/usuario',
         templateUrl : "paginas/login/index.html",
         authorize: false,
         controller: 'UserCtrl'
     })
-    .state('painel', {
-        url:'/painel',
-        templateUrl: "paginas/painel/index.html",
-        authorize: true
-    })
+    
 
     $urlRouterProvider
     .otherwise('/');
