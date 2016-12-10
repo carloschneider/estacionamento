@@ -13,7 +13,7 @@ module.exports = (app)=>{
 		{
 			nome: 		{ type: String, required: true},
 			
-			login: 		{ type: String, required: true,unique: true},
+			login: 		{ type: String, required: true, unique: true},
 			
 			email: 		{ type: String},
 			
@@ -35,6 +35,8 @@ module.exports = (app)=>{
 	
 	usuario.set('redisCache', true);
 	usuario.set('expires', 30);
+	// Adicionando Index
+	usuario.index({token: 1, login: 1});
 
 	return mongoose.model('Usuario', usuario);
 	

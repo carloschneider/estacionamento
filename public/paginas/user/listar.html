@@ -3,7 +3,7 @@
  		<td style="width:35%">Nome</td>
  		<td style="width:20%">Status</td>
  		<td style="width:20%">Grupo</td>
- 		<td style="width:25%">Editar</td>
+ 		<td style="width:25%">Ações</td>
  	</tr>
  	<tr ng-repeat="user in users">
  		<td>
@@ -28,7 +28,7 @@
  </td>
  <td style="white-space: nowrap">
  	<!-- form -->
- 	<form editable-form name="rowform" onbeforesave="update($data, user.id)" ng-show="rowform.$visible" 
+ 	<form editable-form name="rowform" onbeforesave="update($data, user._id)" ng-show="rowform.$visible" 
  	class="form-buttons form-inline" shown="inserted == user">
  		<button type="submit" ng-disabled="rowform.$waiting" class="btn btn-primary">
  			save
@@ -38,8 +38,8 @@
  		</button>
  	</form>
  	<div class="buttons" ng-show="!rowform.$visible">
- 		<button type="button" class="btn btn-primary" ng-click="rowform.$show()">Editar</button>
- 		<button type="button" class="btn btn-danger" ng-click="removeUser($index)">Deletar</button>
+ 		<button type="button" class="btn btn-primary glyphicon glyphicon-pencil" ng-click="rowform.$show()"></button>
+ 		<button type="button" class="btn btn-danger glyphicon glyphicon-trash" ng-click="del(user)"></button>
  	</div>  
  </td>
 </tr>
