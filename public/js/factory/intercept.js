@@ -1,26 +1,35 @@
-'use strict'
-app.factory('AuthInterceptor', ['$location','AuthService','$q','$httpProvider' ,
-  function($location,AuthService,$q,$httpProvider){
-   function AuthInterceptor ($location, AuthService, $q) {
+
+(function(){
+  'use strict'
+  app.factory('authInterceptor', ['$q','$window','$localStorage', function ($q, $window,$localStorage) {
+
     return {
-      request: function(config) {
+      request: function (config) {
         config.headers = config.headers || {};
-
-        if (AuthService.getToken()) {
-          config.headers['x-access-token'] =  + AuthService.getToken();
+        if ($localStorage.token) {
+          config.headers['x-access-token'] = $localStorage.token;
         }
-
         return config;
       },
-
       responseError: function(response) {
         if (response.status === 401 || response.status === 403) {
-          $location.path('/');
+          $location.path('#/');
         }
         return $q.reject(response);
       }
-    }
-  }
-  $httpProvider.interceptors.push('AuthInterceptor');
-}]);
+    };
+  }])
+
+  app.config(function ($httpProvider) {
+    $httpProvider.interceptors.push('authInterceptor');
+  });
+})();
+
+
+
+
+
+
+
+
 

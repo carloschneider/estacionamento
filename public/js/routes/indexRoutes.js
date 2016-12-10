@@ -1,26 +1,24 @@
-'use strict'
+(function(){
+    'use strict'
+    app.config(['$stateProvider', '$urlRouterProvider' , function($stateProvider, $urlRouterProvider) {
 
-app.config(['$stateProvider','$locationProvider', '$urlRouterProvider' , function($stateProvider,$locationProvider, $urlRouterProvider) {
+        $stateProvider    
 
-    $stateProvider    
+        .state("login", {
+            url: '/',
+            templateUrl : "/paginas/login/index.html",
+            controller: 'UserCtrl',
+            authorize: false
+            
+        })
+       
 
-    .state("login", {
-        url: '/',
-        templateUrl : "paginas/login/index.html",
-        authorize: false,
-        controller: 'UserCtrl'
-    })
-    .state('painel', {
-        url:'/painel',
-        templateUrl: "paginas/painel/index.html",
-        authorize: true
-    })
+        $urlRouterProvider
+        .otherwise('/');
 
-    $urlRouterProvider
-    .otherwise('/');
+    }]);
+})();
 
-    $locationProvider.html5Mode(true);
-}])
 
 
 

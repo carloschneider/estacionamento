@@ -8,7 +8,7 @@ module.exports = (app)=>{
 		autenticar: (req,res)=>{
 			User.findOne({
 				login: req.body.nome
-			}, function(err, user) {
+			},{token: 0}, function(err, user) {
 				
 				if (err) throw err;
 
@@ -19,19 +19,21 @@ module.exports = (app)=>{
 					if(pass.validate(user.password, req.body.senha)) {
 						res.json({ success: false, message: ' <strong> Ops! </strong> Senha incorreta.' });
 					} else {
-
 						var token = jwt.sign(user, app.get('superSecret'), {
-							expiresIn : 60*60*24
+								expiresIn : 60*40*60
+							});	
+						User.update({_id: user._id},{$set:{token: token}}).then((us)=>{
+							res.json({
+								success: true,
+								message: 'Token Ativado',
+								token: token
+							});
+						}).catch((err)=>{
+							throw err;
 						});
-
-
-						res.json({
-							success: true,
-							message: 'Token Ativado',
-							token: token
-						});
-					}   
-				}
+						
+					};
+				};
 			});
 		},
 

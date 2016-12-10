@@ -23,7 +23,8 @@ var depsJS 			= ['public/library/jquery/dist/jquery.min.js',
 
 var appJs 			= [ 'public/js/app.js',
 						'public/js/factory/auth.js',
-						'public/ljs/factory/intercept.js',
+						'public/js/factory/intercept.js',
+						'public/js/run/authValide.js',
 						'public/js/routes/indexRoutes.js',
 						'public/js/routes/painelRoutes.js',
 						'public/js/controllers/painelCtrl.js',
@@ -45,6 +46,7 @@ gulp.task('devDeps', function ()
 	var depsjs = gulp.src(depsJS);
 	return depsjs.pipe(concat('modulos.js'))
 		.pipe(sourcemaps.init({loadMaps: true}))
+		//.pipe(uglify())
 		.pipe(gulp.dest('public'));
 });
 
@@ -58,6 +60,7 @@ gulp.task('devApps', function ()
 	var depsjs = gulp.src(appJs);
 	return depsjs.pipe(concat('angular.js'))
 		.pipe(sourcemaps.init({loadMaps: true}))
+		 .pipe(uglify())
 		.pipe(gulp.dest('public'));
 });
 gulp.task('devCss', function ()
@@ -65,6 +68,7 @@ gulp.task('devCss', function ()
 	var depsjs = gulp.src(devcss);
 	return depsjs.pipe(concat('modulo.css'))
 		.pipe(sourcemaps.init({loadMaps: true}))
+		//.pipe(uglify())
 		.pipe(gulp.dest('public'));
 });
 
@@ -72,13 +76,13 @@ gulp.task('devCss', function ()
 
 /** initialize **/
 gulp.task('default', function (callback)
-{
-	runSequence('devDeps','devCss','devApps','icons', callback);
+{	//'devDeps','devCss'
+	runSequence('devDeps','devApps','icons', callback);
 });
 
 /** watch **/
-gulp.task('watch', function ()
+gulp.task('escute', function ()
 {
-	gulp.watch('public/library/**/*.js', ['devJS']);
+	gulp.watch('public/js/**/*.js', ['devApps']);
 	gulp.watch('public/library/**/*.css', ['buildStyles']);
 });

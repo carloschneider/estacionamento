@@ -14,6 +14,19 @@ module.exports = (app)=>{
 			.catch(err => res.json(err));
 
 		},
+		listar: (req,res)=>{
+			let recebe = User.find({},{token:0, password:0})
+			recebe.lean();
+			recebe.exec().then((user)=> res.json(user)).catch((err)=> res.json({msg: err}));
+		},
+		update: (req,res)=>{
+			let user = new User()
+			user = req.body;
+			let update = {nome: user.nome, status: user.status, tipo: user.tipo};
+			
+
+			User.update({_id: user._id},update).then((user)=> res.json({msg: true})).catch((err)=> res.json({msg: false}));
+		},
 		default: (req,res)=>{
 			let user = new User();
 			user.nome = 'Higor Diego'

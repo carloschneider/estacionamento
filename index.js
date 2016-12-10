@@ -20,13 +20,6 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(express.static(path.join(__dirname, '/public')));
 
-// Todas as urls vai para o controle do angular
-app.get('/*', function(req, res){
-    res.sendFile(path.join(__dirname, './public/paginas/', 'index.html'));
-    
-});
-
-
 
 /*
 	Validação do token
@@ -34,7 +27,7 @@ app.get('/*', function(req, res){
 var apiRoutes = express.Router(); 
 
 apiRoutes.use((req, res, next)=> {
-  var token = req.body.token || req.query.token || req.headers['x-access-token'];
+  var token = req.headers['x-access-token'];
   if (token) {
   	jwt.verify(token, app.get('superSecret'), (err, decoded)=> {      
   		if (err) {
@@ -49,7 +42,7 @@ apiRoutes.use((req, res, next)=> {
 
   	return res.status(403).send({ 
   		success: false, 
-  		message: 'No token provided.' 
+  		message: 'Você não tem permissão.' 
   	});
 
   }

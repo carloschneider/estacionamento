@@ -21,6 +21,7 @@ module.exports = (app)=>{
 			
 			tipo: 		{type: Number, default: 0 },
 		
+			token: 		{type: String},
 			
 			created_at: { type: Date, default: Date.now },
 			
@@ -30,6 +31,7 @@ module.exports = (app)=>{
 			
 		}
 	);
+
 	
 	usuario.set('redisCache', true);
 	usuario.set('expires', 30);
