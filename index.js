@@ -53,27 +53,38 @@ apiRoutes.use((req, res, next)=> {
 app.use('/api', apiRoutes);
 
 
-	/*
-	Importando os modulos..
-	*/
-	consign({cwd:'app', verbose:false})
-	.include('models')
-	.include('funcoes')
-	.then('controllers')
-	.then('routes')
-	.then('config')
-	.into(app)
+	
 
 	app.set('port', (process.env.PORT || 3000))
 
 	const port = app.get('port')
+	,     server = http.createServer(app)
+  ,     io = require('socket.io')(server);
 
-	var server = http.createServer(app);
 
-//socket io
-require('./app/socket/socket.js')(server)
+  io.on('connection', function(socket){
+    console.log('conectado')
+    app.set('socketio', socket);  
+  })
+  
+
+
+
+/*
+  Importando os modulos..
+  */
+  consign({cwd:'app', verbose:false})
+  .include('socket')
+  .include('models')
+  .include('funcoes')
+  .include('controllers')
+  .include('routes')
+  .include('config')
+  .into(app)
+
 
 server.listen(port, () => console.log('Servidor rodando na porta: %d', port))
+
 
 
 

@@ -10,18 +10,19 @@
             authorize: true
         })
 		.state('painel.user',{
+			url:'/user',
 			templateUrl: '/paginas/user/index.html',
 			controller: 'UserCtrl',
 			authorize: true
 		})
 		.state('painel.user.cadastrar',{
+			url:'/cadastrar',
 			templateUrl: '/paginas/user/cadastrar.html',
-			controller: 'UserCtrl',
 			authorize: true
 		})
 		.state('painel.user.listar',{
+			url:'/listar',
 			templateUrl: '/paginas/user/listar.html',
-			controller: 'UserCtrl',
 			authorize: true
 		})
 

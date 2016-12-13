@@ -1,14 +1,21 @@
-
 (function(){
 	'use strict'
-	app.controller('UserCtrl', ['$scope', 'AuthService','Flash','$state','UserFactory'
-		,function($scope,AuthService,Flash,$state,UserFactory){
+	app.controller('UserCtrl', ['$scope', 'AuthService','Flash','$state','UserFactory','mySocket'
+		,function($scope,AuthService,Flash,$state,UserFactory,mySocket){
 			$scope.user = {};
+			$scope.users = [];
 			$scope.error = {};
-			$scope.user = {};
 			Flash.timeout = 5000;
 			$scope.grupo = [{valor: 0, nome: 'Administrador'},{valor: 1, nome: 'Atendimento'}];
-			$scope.status = [{valor: false,nome: 'Ativo'},{valor: true, nome: 'Bloqueado'}];
+			$scope.status = [{valor: false, nome: 'Ativo'},{valor: true, nome: 'Bloqueado'}];
+			/*
+				Iniciando os sockets
+				Caso tenha um novo cadastrado, insere no array.
+			*/
+			mySocket.on('inserir', function(response){
+				$scope.users.push(response.usuario);
+				
+			});
 
 				/*
 					Efetuar o Login
@@ -28,22 +35,27 @@
 							console.log(err);
 						});
 					};
-				/*
-					listar Usuário
-					*/	
+					/*
+						listar Usuário
+						*/	
 
-					$scope.cadastrar = function(){
-						$scope.listarFm = !$scope.listarFm;
-						$state.go('painel.user.cadastrar');
-					};
-					$scope.listar = function(){
-						$scope.listarFm = true;
-						UserFactory.listar().then(function(response){
+						
+
+						$scope.cadastrar = function(){
+							$scope.listarFm = !$scope.listarFm;
+							$state.go('painel.user.cadastrar');
+						};
+						$scope.listar = function(){
+							if($scope.users.length == 0){
+								UserFactory.listar().then(function(response){
+									$state.go('painel.user.listar');
+									$scope.users = response.data;	
+								});
+							}
+							$scope.listarFm = !$scope.listarFm;
 							$state.go('painel.user.listar');
-							$scope.users = response.data;	
-						});
-					};
-				/*
+						};
+				/**
 					Update Usuário
 					*/
 					$scope.update = function(data,id){
@@ -70,42 +82,45 @@
 							});
 						};
 
-					/*
-						Adiciona um novo usuário
-						*/
-						$scope.add = function(user){
-							UserFactory.cadastrar(user).then(function(response){
-								if(response.data.msg){
-									Flash.create('success', response.data.error);
-									delete $scope.user
-								}else{
-									Flash.create('danger', response.data.error);
-									delete $scope.user
-								}
-							}, function(err){
-								console.log(err);
-							});
-						}
+						/*
+							Adiciona um novo usuário
+							*/
 
-					/*
-						Deleta um usuário
-						*/
+							$scope.add = function(user){
+								UserFactory.cadastrar(user).then(function(response){
+									if(response.data.msg){
+										Flash.create('success', response.data.error);
+										delete $scope.user 
+										
+									}else{
+										Flash.create('danger', response.data.error);
+										delete $scope.user
 
-						$scope.del = function(user){
-							UserFactory.delete(user).then(function(response){
+									}
+								}, function(err){
+									console.log(err);
+								});
+							}
+
+						/*
+							Deleta um usuário
+							*/
+
+							$scope.del = function(user){
+								UserFactory.delete(user).then(function(response){
 								/*
 									Retirando o usuario do array
-								*/
-								$scope.users = $scope.users.filter(function(usuario){
-									if(user._id != usuario._id) return usuario
-								});
-							}, function(err){
-								console.log(err);
-							})
+									*/
+									$scope.users = $scope.users.filter(function(usuario){
+										if(user._id != usuario._id) return usuario
+									});
+								}, function(err){
+									console.log(err);
+								})
 
-						}
+							}
 
 
-					}]);
+						}]);
 })();
 

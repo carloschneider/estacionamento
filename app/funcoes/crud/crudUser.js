@@ -1,7 +1,9 @@
 'use strict'
 module.exports = (app)=>{
 	const User = app.models.user
+	,	  Socket = app.socket.userSocket
 	,	  CrudCtrl = {
+
 		cadastrar: (req,res)=>{
 			let user = new User();
 			user.nome = req.body.nome
@@ -9,9 +11,11 @@ module.exports = (app)=>{
 			user.email = req.body.email
 			user.password = req.body.senha
 			user.tipo 	  = req.body.tipo
+			Socket.inserirUser(req,user);
 			user.save()
-			.then(user => res.json({msg: true, error: 'Cadastrado com Sucesso!'}))
-			.catch(err => res.json({msg: false, error: 'Error em Cadastrar Usuário'}));
+
+			.then(user =>res.json({msg: true, error: 'Cadastrado com Sucesso!', usuario: user}))
+			.catch((err) => res.json({msg: false, error: 'Error em Cadastrar Usuário'}));
 
 		},
 		listar: (req,res)=>{

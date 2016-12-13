@@ -11,8 +11,9 @@
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
 				<li ui-route="{{menuItems.url}}" ng-class="{active: $uiRoute}"
+				ng-disabled="{active: $uiRoute}"
 				ng-repeat="(key, menuItem) in menuItems">
-				<a ui-sref="{{menuItem.url}}" title="{{menuItem.title}}">
+				<a ui-sref="{{menuItem.url}}"  title="{{menuItem.title}}">
 					{{menuItem.name}}
 				</a>
 			</li>
