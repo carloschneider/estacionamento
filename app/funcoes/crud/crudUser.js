@@ -11,7 +11,7 @@ module.exports = (app)=>{
 			user.email = req.body.email
 			user.password = req.body.senha
 			user.tipo 	  = req.body.tipo
-			Socket.inserirUser(req,user);
+			Socket.inserirUser(res,user);
 			user.save()
 
 			.then(user =>res.json({msg: true, error: 'Cadastrado com Sucesso!', usuario: user}))
@@ -26,15 +26,14 @@ module.exports = (app)=>{
 		update: (req,res)=>{
 			let user = new User()
 			user = req.body;
-			
 			let update = {nome: user.nome, status: user.status, tipo: user.tipo};
+			Socket.alterarUser(res,user);
 			User.update({_id: user._id},update).then((user)=> res.json({msg: true})).catch((err)=> res.json({msg: false}));
 		},
 		listarLogin: (req,res)=>{
 			let recebe = User.findOne({login: req.params.login}, {login:1});
 			recebe.lean();
 			recebe.exec().then((user)=>{
-				
 				!user ? res.json({msg: false}) : res.json({msg:true,error: '<strong> Ops!</strong> Login já existe! '})
 			}).catch((err)=>{
 				throw err;
@@ -55,7 +54,7 @@ module.exports = (app)=>{
 			res.json({msg: true});
 		},
 		deletar: (req,res)=>{
-			console.log(req.body);
+			Socket.deletar(res, {usuario: req.params.id});
 			User.remove({_id: req.params.id})
 			.then((user)=> res.json({msg: true}))
 			.catch((err)=> res.json({msg: false}));

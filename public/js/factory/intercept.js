@@ -1,7 +1,7 @@
 
 (function(){
   'use strict'
-  app.factory('authInterceptor', ['$q','$window','$localStorage', function ($q, $window,$localStorage) {
+  app.factory('authInterceptor', ['$q','$location','$localStorage', function ($q, $location,$localStorage) {
 
     return {
       request: function (config) {

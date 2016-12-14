@@ -26,10 +26,6 @@
 			authorize: true
 		})
 
-		$urlRouterProvider
-		.otherwise('/painel');
-
-
 	}]);
 })();
 

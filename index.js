@@ -23,50 +23,50 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 /*
 	Validação do token
-*/
-var apiRoutes = express.Router(); 
+  */
+  var apiRoutes = express.Router(); 
 
-apiRoutes.use((req, res, next)=> {
-  var token = req.headers['x-access-token'];
-  if (token) {
-  	jwt.verify(token, app.get('superSecret'), (err, decoded)=> {      
-  		if (err) {
-  			return res.json({ success: false, message: 'Failed to authenticate token.' });    
-  		} else {
-  			req.decoded = decoded;    
-  			next();
-  		}
-  	});
+  apiRoutes.use((req, res, next)=> {
+    var token = req.headers['x-access-token'];
+    if (token) {
+     jwt.verify(token, app.get('superSecret'), (err, decoded)=> {      
+      if (err) {
+       return res.json({ success: false, message: 'Failed to authenticate token.' });    
+     } else {
+       req.decoded = decoded;    
+       next();
+     }
+   });
 
-  } else {
+   } else {
 
-  	return res.status(403).send({ 
-  		success: false, 
-  		message: 'Você não tem permissão.' 
-  	});
+     return res.status(403).send({ 
+      success: false, 
+      message: 'Você não tem permissão.' 
+    });
 
-  }
-});
-
-
-
-app.use('/api', apiRoutes);
+   }
+ });
 
 
-	
 
-	app.set('port', (process.env.PORT || 3000))
+  app.use('/api', apiRoutes);
 
-	const port = app.get('port')
-	,     server = http.createServer(app)
+
+
+
+  app.set('port', (process.env.PORT || 3000))
+
+  const port = app.get('port')
+  ,     server = http.createServer(app)
   ,     io = require('socket.io')(server);
 
 
-  io.on('connection', function(socket){
-    console.log('conectado')
-    app.set('socketio', socket);  
-  })
   
+  app.use(function(req, res, next){
+    res.io = io;
+    next();
+  });  
 
 
 
@@ -83,7 +83,7 @@ app.use('/api', apiRoutes);
   .into(app)
 
 
-server.listen(port, () => console.log('Servidor rodando na porta: %d', port))
+  server.listen(port, () => console.log('Servidor rodando na porta: %d', port))
 
 
 

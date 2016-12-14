@@ -1,12 +1,14 @@
 'use strict'
 module.exports = (app)=>{
 	const socketCtrl = {
-		inserirUser: (req,user)=>{
-			var io = req.app.get('socketio');
-    		io.emit('inserir', {usuario: user});
+		inserirUser: (res,user)=>{
+    		res.io.emit('inserir', {usuario: user});
 		},
-		alterarUser: (req,res)=>{
-
+		alterarUser: (res,user)=>{
+			res.io.emit('update', user);
+		},
+		deletar: (res,user)=>{
+			res.io.emit('deletar', user);
 		}
 	}
 	return socketCtrl

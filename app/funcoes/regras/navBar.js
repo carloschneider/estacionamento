@@ -11,30 +11,31 @@ module.exports = (app)=>{
 					name: 'Usuários',
 					url:  '.user',
 				},
-				{
-					name:   'Estabelecimentos',
-					url:    '.estabelcimento',
-				},
-				{
-					name:   'Clientes',
-					url:    '.clientes',
-				},
-				{
-					name:   'Tabelas de Preço',
-					url:    '.preco',
-				},
-				{
-					name:   'Lava Jato',
-					url:    '.lavajato',
-				},
-				{
-					name:   'Convênios',
-					url:    '.convenio',
-				},
-				{
-					name:   'Mensalidades',
-					url:    '.lavajato',
-				}];
+				// {
+				// 	name:   'Estabelecimentos',
+				// 	url:    '.estabelcimento',
+				// },
+				// {
+				// 	name:   'Clientes',
+				// 	url:    '.clientes',
+				// },
+				// {
+				// 	name:   'Tabelas de Preço',
+				// 	url:    '.preco',
+				// },
+				// {
+				// 	name:   'Lava Jato',
+				// 	url:    '.lavajato',
+				// },
+				// {
+				// 	name:   'Convênios',
+				// 	url:    '.convenio',
+				// },
+				// {
+				// 	name:   'Mensalidades',
+				// 	url:    '.lavajato',
+				// }
+				];
 				res.json(menuItems);
 			}
 		}

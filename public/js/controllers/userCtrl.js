@@ -8,15 +8,7 @@
 			Flash.timeout = 5000;
 			$scope.grupo = [{valor: 0, nome: 'Administrador'},{valor: 1, nome: 'Atendimento'}];
 			$scope.status = [{valor: false, nome: 'Ativo'},{valor: true, nome: 'Bloqueado'}];
-			/*
-				Iniciando os sockets
-				Caso tenha um novo cadastrado, insere no array.
-			*/
-			mySocket.on('inserir', function(response){
-				$scope.users.push(response.usuario);
-				
-			});
-
+			
 				/*
 					Efetuar o Login
 					*/
@@ -32,7 +24,7 @@
 								$state.go('painel')
 							}
 						}, function(err){
-							console.log(err);
+							
 						});
 					};
 					/*
@@ -58,6 +50,19 @@
 				/**
 					Update Usuário
 					*/
+					$scope.atualizar = function(user){
+						$scope.users = $scope.users.filter(function(usuario){
+							if(user._id == usuario._id){
+								usuario.nome = user.nome;
+								usuario.status = user.status;
+								usuario.tipo = user.tipo;
+							
+							};
+							return usuario
+						});
+					};
+
+
 					$scope.update = function(data,id){
 						var user = {
 							nome: data.nome,
@@ -101,6 +106,34 @@
 									console.log(err);
 								});
 							}
+								/*
+									Retirando o usuario do array
+									*/
+									$scope.retirar = function(user){
+										$scope.users = $scope.users.filter(function(usuario){
+											if(user != usuario._id) return usuario
+										});	
+									};
+
+									
+										/*
+											Iniciando os sockets
+											Caso tenha um novo cadastrado, insere no array.
+										*/
+										mySocket.on('inserir', function(response){
+											$scope.users.push(response.usuario);
+										});
+										mySocket.on('deletar', function(response){
+											$scope.retirar(response.usuario);
+										});
+										mySocket.on('update', function(response){
+											$scope.atualizar(response);
+										});
+
+
+
+
+
 
 						/*
 							Deleta um usuário
@@ -108,12 +141,7 @@
 
 							$scope.del = function(user){
 								UserFactory.delete(user).then(function(response){
-								/*
-									Retirando o usuario do array
-									*/
-									$scope.users = $scope.users.filter(function(usuario){
-										if(user._id != usuario._id) return usuario
-									});
+									$scope.retirar(user._id);
 								}, function(err){
 									console.log(err);
 								})
